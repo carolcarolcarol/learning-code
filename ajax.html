@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <input type="text" name="input" id="input" placeholder="搜点什么吧">
+    <button id="btn">立即搜索</button>
+    <ul id="songs">
+
+    </ul>
+  <script>
+    // button 通过 一个 ajax | http 请求，向后端请求数据
+    // get是通过url的形式，把数据传给后端，例如
+    //http://neteasecloudmusicapi.zhaoboy.com/search?keywords=jay
+    //keyword就是前端传给后端的搜索关键词，keyword=周杰伦
+    const btn=document.getElementById('btn');
+    //拿到输入框里的内容，用输入框里的内容去搜索
+
+    //将按钮绑定监听事件，当按钮被点击时，会调用回调函数
+    btn.addEventListener('click',function(){
+        const val=document.getElementById('input').value;
+        const xhr = new XMLHttpRequest();
+    // 向网易云后端 url：统一资源定位符
+    // 1: 请求的方法 get: http 规定的一个方法
+    // 2：request url
+    // 3: true 异步 false 同步,
+    //同步console拿得到数据，异步拿不到
+    //异步：单线程无阻塞？不用一直等，等取完资源后，再通知你。后面代码继续执行
+    //同步：取数据需要时间，这个时间里就等着，一直等到取到数据。后面代码不会继续往下执行。取到数据以后才会继续往下执行。
+   
+    xhr.open('get',
+    //这里用模板字符串的形式，将keywords的内容替换成input框里输入的内容
+    `http://neteasecloudmusicapi.zhaoboy.com/search?keywords=${val}`,
+ true);
+ //onreadystatechange,异步方式时，取到数据以后，通过回调函数通知它来取
+ //绑定回调函数
+ //回调状态 readyState可百度看状态数字具体含义并记住
+ //还要了解并使用xmlhttprequest的各种属性
+    xhr.onreadystatechange=function(){
+        console.log(xhr.readyState,xhr.response);
+        if(xhr.readyState===4 && xhr.status===200)//
+        {
+            
+           let res=JSON.parse(xhr.response);//把得到的响应数据转换成JSON格式
+           console.log(res);
+        //拿到结果后，应该要把结果渲染到前端页面上
+        document.getElementById('songs').innerHTML=res.result.songs.map(function(song){
+            //这里指，map创建一个新数组，这个新数组用来存放通过function函数对res.result.songs进行操作之后的数组，
+            //song类似于i,
+            //对获取的对象进行遍历，然后返回song.name,song.album.name,singers，把返回的值放到这个新的map数组里。
+            //最后渲染到前端页面上
+        
+            //map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。
+//             例如var array1 = [1,4,9,16];
+// const map1 = array1.map(x => x *2);
+// console.log(map1);
+// 打印结果为：
+
+// > Array [2,8,18,32]
+            let { artists } =song;//artsits=song.artist
+            let singers = artists.map(function(artist){ return artist.name}).join('/');//演唱者可能多人
+            //，每个演唱者的名字用/符号拼接
+            return `
+            <li>
+                ${song.name} 演唱者： ${singers}  专辑： ${song.album.name}
+            </li>
+            `
+        }).join('')
+        }
+    }
+    xhr.send();
+    //请求发出去后，异步方式是无阻塞的，不等数据拿到，所以请求发出后，会立刻继续执行后文的代码
+    // 拿到le
+    console.log(xhr.response);
+    console.log(123456);
+
+    })
+    
+
+  </script>
+</body>
+</html>
