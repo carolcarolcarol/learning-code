@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* relative相对于自己计算，absolute相对于父级第一个设置定位属性的元素来定位 */
+    /* css选择器 */
+    /* 类选择（html里的class */
+    .body{
+       background: url("./cat/maoshenti.png");
+       width: 117px;
+       height: 201px;
+       /* 水平居中，垂直居中 */
+       /* absolute绝对定位，相对于父级第一个设置定位属性的元素来定位，如果没有找到，则相对于body来定位（body即最外面那层)。父级：例如body就是cat,和cat下weiba,maozhua,body的父级 */
+       position:absolute;
+       /* left:50%,right:50%,相对于Body的宽高计算50%，整张图片一起移，比如没设位置之前，图片在左上角，顶着最左上的那个点，那么50%以后，图片顶着的点由最左上那一点移动到了50%，50%那一点，所以图片从布局上来看并不是中心位置，只是图片左上角顶着的那一点是整个布局的中心位置。 */
+       left:50%;
+       top:50%;
+       /* 微调，往左移猫身体，长，的百分之五十，往上移猫身体，宽，的百分之五十 */
+       /* transform是相对于自己的宽高来设置位置，这里的自己指的就是cat包含下的.body,而.body只有一张背景图，所以此时的transform指的是这张背景图的位置 */
+       transform: translate3d(-50%,-50%,0);
+    }
+    .weiba{
+        background: url("./cat/maowei.png");
+        width: 64px;
+        height: 194px;
+
+        /* .weiba相对于父级第一个设置了定位属性的元素来定位。.weiba的父级有.body,且.body设置了定位属性。那么.weiba就是相对于.body来进行定位。 */
+        position: absolute;
+        top:-182px;
+        left: 0;
+        /* 尾巴要动起来，在css里即为旋转rotate */
+        /* 3s，三秒是动画的时间，每隔三秒动一次,ani是动画的名字
+        ease-in-out是动画的速度 */
+        /* ease-in-out以慢速开始，慢速结束，中间快，可在浏览器检查里看效果 */
+        /* infinite指的是动画转动的次数是无穷大，一直转动 */
+        /* alternate指的是从0%---100%，再从100%--0%都应用这个动画，如果不加alternate，那么只有从0%-100% */
+        /* 要指定动画变化的基点，要以尾巴的根部为基点旋转。而默认是以尾巴的中心点，百分之五十，百分之五十来旋转的。 */
+        animation:ani 3s ease-in-out infinite alternate; 
+        /* transform-origin设置元素旋转的基点位置 */
+        /* 看元素往哪个位置微调，左上是负，右下是正。 */
+        transform-origin: 100% 100%;
+
+    }
+    /* keyframes关键帧 */
+    /* 定义一个叫ani的动画 */
+    @keyframes ani{
+        /* 0%指的是猫尾原本的位置，100%是猫尾旋转的最终位置。因为猫尾旋转有个范围。现在就是要确定这个旋转的范围。 */
+        100%
+        {
+            /* 逆时针旋转5° */
+            transform: rotate(-5deg);
+
+        }
+
+    }
+    .maozhua{
+        background: url("./cat/maozhua.png");
+        width: 34px;
+        height: 81px;
+        position:absolute;
+        top:183px;
+        left:70px;
+        animation:zhuadong 3s infinite alternate ease-in-out;
+        transform-origin: 0% 0%;
+
+    }
+    @keyframes zhuadong{
+        100%{
+             transform:rotate(5deg);
+        }
+
+    }
+    .maoyan1{
+        background: url("./cat/maoyan1.png");
+        width: 4px;
+        height: 3px;
+        position:absolute;
+        top:170px;
+        left:72px;
+
+    }
+    .maoyan2{
+        background: url("./cat/maoyan2.png");
+        width: 4px;
+        height: 3px;
+        position:absolute;
+        top:176px;
+        left:89px;
+
+    }
+    .maozui{
+        background: url("./cat/maozui.png");
+        width: 4px;
+        height: 3px;
+        position:absolute;
+        top:185px;
+        left:75px;
+    }
+</style>
+<body>
+    <!--div把网页分为一块一块的-->
+    <div class="cat">
+      <!-- 猫的组成 -->
+      <div class="body">
+      <div class="weiba"></div>
+      <div class="maozhua"></div>
+      <div class="maoyan1"></div>
+      <div class="maoyan2"></div>
+      <div class="maozui"></div>
+    </div>
+    </div>
+</body>
+</html>
+<!-- 猫爪：宽34px,高：81px -->
