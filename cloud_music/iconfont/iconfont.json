@@ -1,0 +1,23 @@
+{
+  "id": "1795335",
+  "name": "cloud_music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1410419",
+      "name": "menu",
+      "font_class": "menu",
+      "unicode": "e693",
+      "unicode_decimal": 59027
+    },
+    {
+      "icon_id": "7206046",
+      "name": "Search",
+      "font_class": "Search",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    }
+  ]
+}
