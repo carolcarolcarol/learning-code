@@ -1,0 +1,59 @@
+       //静态 弹性布局 html+css 网易云首页header
+    $theme_color = #d44439
+.top
+    display flex
+    flex-direction row 
+//     //flex-direction: row|row-reverse|column|column-reverse|initial|inherit;
+// 属性值
+// 值	描述	实例
+// row	默认值。灵活的项目将水平显示，正如一个行一样。
+// row-reverse	与 row 相同，但是以相反的顺序。	
+// column	灵活的项目将垂直显示，正如一个列一样。	
+// column-reverse	与 column 相同，但是以相反的顺序。
+    justify-content space-between
+    //作用于flex布局内
+    //https://www.runoob.com/cssref/css3-pr-justify-content.html justify-content
+    //space-brtween 水平排列，从左到右（左右两端顶格），每两个容器之间有相等留白
+    //flex-start 容器顶着最左边往右排列，容器间无间隔
+    //flex-end 把flex-start的排列平移至挨最后一个容器挨着最右边
+    //center 把flex布局下的容器居中排列，中无空隙
+    //space-around 容器两边都有空隙，不像space-between最左最右是顶格，间距空隙最左最右和容器之间的空隙大小不同
+
+    padding 5px 10px
+    //padding 简写属性在一个声明中设置所有内边距属性。处于边框（如果设置了边框）与内容之间的填充
+//     这里的padding撑大了盒子的高，没撑大宽？？？
+
+    //设置一个P元素的填充：四个值的顺序为上右下左
+//     padding:10px 5px 15px 20px;
+// 上填充是 10px
+// 右填充是 5px
+// 下填充是 15px
+// 左填充是 20px
+
+// padding:10px 5px 15px;
+// 上填充是 10px
+// 右填充和左填充是 5px
+// 下填充是 15px
+
+// padding:10px 5px;
+// 上填充和下填充是 10px
+// 右填充和左填充是 5px
+
+    background  #d44439
+    span 
+      line-height 40px
+      //行高，这里三个span下（两个图标，一个文字）的高度都是40
+      color #f1f1f1
+      font-size 20px
+      //文本大小
+      &.iconfont
+      //&.表示使用上一级的选择器继续往下选择
+      //span里有两个class为iconfont
+        font-size 25px
+        //图标大小也可用font-size设置吗，还是因为这里图标引用的编码
+
+        //父元素的宽高可以由子元素来提供（撑起来），所以虽然top里面没有设置宽高，但是span里面有个line-height，所以
+        //div块级元素默认百分之百
+        
+        
+

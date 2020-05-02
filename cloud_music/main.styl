@@ -1,0 +1,63 @@
+
+    $theme_color = #d44439
+    $underline_color = #f1f1f1
+.top
+
+    display flex
+    flex-direction row 
+
+    justify-content space-between
+    
+
+    padding 5px 10px
+  
+
+    background  #d44439
+    
+    span 
+      line-height 40px
+    
+      color #f1f1f1
+      font-size 20px
+      
+      &.iconfont
+    
+        font-size 25px
+
+.tabber
+    height 44px
+    //一般就是44px
+    display flex
+    flex-direction: row
+    justify-content: space-around
+    //移动端大量使用弹性布局
+    background: $theme_color
+    a
+       flex 1
+       //flex 属性用于设置或检索弹性盒模型对象的子元素如何分配空间。1就是是每个子元素分配到的空间是相同的
+       //即每个a分配到的空间都是相同的
+
+       //    flex 属性是 flex-grow、flex-shrink 和 flex-basis 属性的简写属性。
+
+       //    注意：如果元素不是弹性盒模型对象的子元素，则 flex 属性不起作用。
+       text-decoration: none
+       padding 2px 0
+       font-size: 14px
+       color #e4e4e4
+       
+       .item
+           height 100% //tabber的百分之百？
+           display: flex
+           flex-direction: row //水平显示
+           justify-content: center //.item里的内容在水平方向居中显示
+           align-items: center //.Item里的内容在垂直方向居中显示
+        &.selected
+           span
+             padding 3px 0
+             font-weight: 700//文字粗细
+             color:$underline_color
+             border-bottom: 2px solid $underline_color
+
+
+      
+
