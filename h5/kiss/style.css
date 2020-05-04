@@ -1,0 +1,269 @@
+
+/* 所有页面浏览器都会默认给body添加margin属性，所以加个margin:0 */
+body{
+    background-color: #78e08f;
+    margin:0;
+}
+/* 一个容器如果不设置高度，那么它的高度由里面的元素决定 */
+.container{
+    margin:0;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width: 232px;
+
+    /* 已知容器宽度，可直接用margin-left:-116px; */
+    transform: translate3d(-50%,-50%,0);
+    /* 设置这个为零会去掉元素之间的间距。这样两个圆就可以放在同一行 */
+    font-size:0;
+}
+
+.face{
+    width:70px;
+    height: 30px;
+    position:absolute;
+    right:0;
+    /* ？？？？？ */
+    top: 30px;
+ 
+    border-top-right-radius: 15px;
+
+}
+/* 伪类属性 伪类必须要有content，可以为空，给脸添加腮红*/
+/* 伪类也是一个容器 */
+/* 伪类没有真实Html结构，必须给一个具体的位置才能在页面上展示出来 */
+.face::before{
+    content:"";
+    width: 18px;
+    height: 8px;
+    position:absolute;
+    top: 20px;
+    right: -8px;
+    border-radius: 50%;
+    background-color: #badc58;
+
+
+}
+
+/* 另外半边的腮红 */
+.face::after{
+     content:"";
+     width: 18px;
+     height: 8px;
+     background-color: #badc58;
+     position:absolute;
+     /* 左上是负数，右下是正数，脸左上的位置往下20px,往右5px */
+     left:-5px;
+     top:20px;
+     border-radius: 50%;
+
+
+
+}
+.ball{
+    /* 8px的实线边框 */
+    border:8px solid;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #fff;
+    /* 让它变成行内块级容器 */
+    /* 容器之间会默认有间隙 */
+    display:inline-block;
+    vertical-align: top;
+    /* 居头部对齐 */
+    position:relative;
+    /* relative相对于自己本身定位，比如原本在正中间，如果用了relative，就是相对于自己之前的位置挪动相应距离 */
+
+}
+
+.eye{
+    width: 15px;
+    height: 14px;
+
+    border-radius: 50%;
+    border-bottom: 5px solid #000;
+    position:absolute;
+
+}
+
+.eye-l{
+    left:10px;
+
+}
+.eye-r{
+    right:5px;
+}
+
+.mouth{
+    width: 30px;
+    height: 10px;
+    /* 正方形百分之五十变成圆，长方形50%变成椭圆 */
+    border-radius: 50%;
+    border-bottom: 5px solid #000;
+    position: absolute;
+    bottom:-5px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    transform: translate(3px);
+
+}
+
+.face-r{
+    left:0;
+    top:37px;
+
+
+}
+.face-r::before{
+    width: 10px;
+    height: 10px;
+    right:-4px;
+}
+.face-r::after{
+    width: 10px;
+    height: 10px;
+    left:5px;
+}
+
+.eye-r-p{
+    border-top: 5px solid #000;
+    border-bottom:none;
+}
+
+.kiss-m{
+    position: absolute;
+    left: 20px;
+    top: 22px;
+    /* 透明度，0就是看不见的状态，全透明 */
+    opacity: 0;
+    animation: kiss-m 4s infinite ease;
+}
+.mouth-r{
+    animation:  mouth-m ease 4s infinite;
+}
+@keyframes mouth-m{
+    0%{
+    opacity:1;
+}
+54.9%{
+    opacity: 1;
+}
+55%{
+    opacity: 0;
+}
+66%{
+    opacity: 0;
+}
+66.1%{
+    opacity: 1;
+}
+
+
+}
+@keyframes kiss-m{
+    0%{
+        opacity:0;
+    }
+    55%{
+        opacity: 0;
+    }
+    55.1%{
+        opacity: 1;
+    }
+    66%{
+        opacity: 1;
+    }
+    66.1%{
+        opacity: 0;
+    }
+}
+
+.kiss{
+    width: 13px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    border-left: 5px solid #000;
+    
+}
+#l-ball{
+    animation:close 4s infinite ease ;
+    /*  */
+    /* 得让左脸层级变高，要不然蹭的位置不对 */
+    z-index:50;
+}
+
+
+.face-l{
+    /* ease匀速执行 */
+    animation:face infinite ease 4s;
+}
+
+#r-ball{
+    animation: kiss infinite ease 4s;
+}
+@keyframes kiss{
+    40%{
+        transform: translate(0) rotate(0);
+    }
+    50%{
+        /* rotate正数为顺时针方向旋转相应度数，负数为逆时针。 */
+        transform: translate(30px) rotate(20deg);
+    }
+    60%{
+        transform: translate(-33px);
+    }
+    67%{
+        transform:translate(-33px);
+    }
+    77%{
+        transform: translate(0);
+    }
+}
+
+
+@keyframes face{
+    /* 0%以时间为单位，0%就是一开始 */
+    0%{
+        /* translate平移，rotate旋转 */
+        transform: translate(0) rotate(0);
+
+    }
+    10%{
+
+        transform: translate(0) rotate(0);
+
+    }
+    20%{
+        /* 0.8秒的时候 */
+        /* 逆时针旋转两度*/
+        /* ？？？ */
+        /* 20%，35%因为要摇两下头 */
+        transform: translate(5px) rotate(-2deg);
+
+
+    }
+    28%{
+        transform: translate(0) rotate(0);
+    }
+    35%{
+        transform: translate(5px) rotate(-2deg);
+    }
+    50%{
+        transform: translate(0) rotate(0);
+    }
+    100%{
+        transform: translate(0) rotate(0);
+    }
+}
+@keyframes close{
+    0%{ transform: translate(0);}
+    20%{ transform: translate(20px);}
+    35%{ transform: translate(20px);}
+    55%{ transform: translate(0);}
+    100%{ transform: translate(0);}
+  
+}
+/* 动画具体移动多少，旋转多少没搞懂 */

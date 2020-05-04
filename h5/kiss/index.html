@@ -1,0 +1,42 @@
+
+<!-- margin外间距 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kiss</title>
+    <!-- .代表当前文件夹 ，引入相对路径-->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- dom结构 -->
+        <!-- 左脸的容器 -->
+      <div class="ball" id="l-ball">
+          <!-- 左脸 -->
+        <div class="face face-l">
+            <!-- l左眼，r右眼 -->
+            <div class="eye eye-l"></div>
+            <div class="eye eye-r"></div>
+            <div class="mouth"></div>
+            <!-- 伪类属性 -->
+        </div>
+      </div>
+      <div class="ball" id="r-ball">
+        <div class="face face-r">
+            <div class="eye eye-l eye-r-p"></div>
+            <div class="eye eye-r eye-r-p"></div>
+            <div class="mouth mouth-r"></div>
+            <div class="kiss-m">
+                <div class="kiss"></div>
+                <div class="kiss"></div>
+            </div>
+
+        </div>
+
+      </div>
+<!-- div是块级容器，每一个块级容器会自动在浏览器占据一行 -->
+    </div>
+</body>
+</html>
