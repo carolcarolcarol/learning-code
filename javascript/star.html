@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+       
+
+    </div>
+    <script>
+        // const button = document.querySelector('.like-btn');
+        // const buttonText = document.querySelector('.like-text');
+        // let isLiked = false;
+        // button.addEventListener('click',()=>{
+        //     isLiked=!isLiked;
+        //     if(isLiked){
+        //       buttonText.innerHTML('点赞');
+        //     }
+        //     else{
+        //       buttonText.innerHTML('取消');
+        //     }
+        // },false)
+
+
+        //封装
+        createDOMFromString = (domString)=>{
+            const oDiv = document.createElement('div');//创建一个dom节点
+            oDiv.innerHTML = domString; //给这个空的div加上html代码
+
+            return oDiv;
+        }
+        class LikeButton{
+            constructor(){
+                //构造函数，当class LikeButton被new的时候，构造函数就会被执行
+                //一个类是属性和方法的复合对象
+                this.state = {isLiked : false}
+                //this是一个对象，在一个class对象内部，里面的this指向实例化后的对象，
+                //而此时，实例化的对象暂时只有一个，也就是likeButton
+                //z在对象内部，通过this就可以全局访问对象内部的内容
+
+            }
+            render(){
+                //下文调用了写在class之前的createDOMFromString函数，将domstring添加进div中
+                this.el=createDOMFromString(`
+                <button id='like-btn'>
+                  <span class='like-text'>${this.state.isLiked?'取消':'点赞'}</span>
+                </button>
+                `)
+                //由于初始状态是false，所以初始状态按钮显示点赞
+                // <span> 标签提供了一种将文本的一部分或者文档的一部分独立出来的方式。
+                
+                this.el.addEventListener('click',this.changeLikeText.bind(this),false);
+                //changeLikeText放到外面去写，有利于代码的职责分离，即优化
+                return this.el;
+            }
+            changeLikeText(){
+                //改变this.state.lsLiked的值
+                // console.log(this.state.isLiked)
+                this.state.isLiked=!this.state.isLiked;//单独写这一行会报错，说isliked没被定义
+                //由于单独写上一行会报错，所以，console.log(this)来看，此时发现this没有指向实例化的对象
+                //likebutton，而是被改写了，console.log返回的是div及其包裹里的内容
+                //因为this.changeLikeText是一个事件处理函数，事件处理函数会将this指向事件的target，
+                //即为指向触发事件的DOM对象，此事件处理函数，是点击按钮后触发的
+                //解决方法是，给this.changeLikeText绑定一个this对象，这样它就不会改写this，而是按照绑定的this
+                //的指向执行。将未被改写前的this绑定给this.changeliketext即可
+
+                //每个函数里都有this,this是个指针，具体指向谁，由调用者决定
+                //1.作为对象的方法调用，指向对象本身
+                //以后文中likeButton.render()为例，render是实例化对象likeButton的一个方法，那么render里面的
+                //this自然就是作为对象的方法调用，指向对象本身，所以该this也可以找到挂载在对象上的this.state并对它进行操作
+                //2.作为事件函数调用，this指向事件发生的元素，使用bind可以强行绑定函数内部的this指向
+                //bind不是立刻执行的函数
+                // call是立即执行
+
+                // class封装复用  
+                //constructor声明属性 this.state.
+                //render渲染到到页面上
+                //console.log(this.state.isLiked);
+                const likeText = this.el.querySelector('.like-text');
+                likeText.innerHTML = this.state.isLiked?'取消':'点赞';
+
+
+                //为什么createDOMFromString要单独写在外面？
+                //createdomstring不该单独写到class类里面去，它应该是一个独立的功能
+                //其他类也有可能需要这个功能，所以写在外面也可以方便其他需要这个功能的类去调用
+                //util（工具）方法
+                
+
+               
+
+
+
+            }
+        }
+        const wrapper = document.querySelector('.wrapper');
+        const likeButton =  new LikeButton();
+       // wrapper.innerHTML = likeButton.render();
+       wrapper.appendChild(likeButton.render());
+        
+        </script>
+</body>
+</html>
