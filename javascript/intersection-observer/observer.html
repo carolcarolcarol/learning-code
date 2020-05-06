@@ -1,0 +1,74 @@
+<!-- intersection obeserver文档：https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container{
+        width: 200px;
+        height: 600px;
+         overflow: scroll;
+         /* overflow除了超出滚动还可以选择超出隐藏hidden */
+       /* //超出滚动 */
+       border:solid 1px black;
+
+    }
+    /* 要想有上下滚动的效果，则子容器target的大小要比父容器container所设置的200*600大 ，即在其范围之外，这样就能撑大父容器*/
+    .target{
+        margin-top:900px;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        border:solid 1px black;
+
+    }
+</style>
+<body>
+    <div class="container">
+    <div class="target"></div>
+</div>
+<script>
+// IntersectionObserver.root 只读 
+// 所监听对象的具体祖先元素(element)。如果未传入值或值为null，则默认使用顶级文档的视窗。
+    // target是在container里面滚动的，即container为target的root
+
+
+    //属性和方法
+    //抽象：某种类别：比如人类
+    //具体：类别的具体实体，比如具体哪个人类---程卿
+    //属性：以人类为例，属性为年龄，性别，电话等
+    //方法：具体做什么，比如 程卿.sleep()等
+    let target = document.querySelector('.target');
+
+    let observer = new IntersectionObserver(function(nodes){
+        nodes.forEach(function(node){
+            //console.log(node);
+            //isIntersecting的值记录观察的对象有没有出现在窗体内
+            if(node.isIntersecting){
+               console.log('已经出现了');
+
+
+            }
+        })
+
+    },{//指定了root和rootMargin之后，target还未出现，isintersecting就会被设为true，因为rootmargin的下边距设为了100px,那么计算目标元素可视区域的时候就少算了100Px，因为只要碰到了那个设置的外边距就算它出现在了可视范围内
+        root:document.querySelector('.container'),
+        //目标元素距离根元素的外边距
+        rootMargin:'0px 0px 100px 0px',//上右下左
+        threshold:[0.5]//阈值
+        //加上threshold这个参数之后，只有target在窗体出现区域超过百分之五十（0.5）才会将isintersecting置为true
+        //thresold还可以设置多个参数，比如 threshole:[0.5,1]这样超过0.5会通知一次，到1也会通知一次
+    });
+    observer.observe(target);
+    //开始观察target
+    //如果target出现在视窗范围之内，就会有通知
+
+
+</script>
+</body>
+</html>
