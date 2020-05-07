@@ -1,0 +1,64 @@
+body{
+    margin:0;
+    height: 100vh;
+    /* 100vh代表整个设备高度的百分之百，50vh代表整个设备高度的百分之五十 */
+    /* 弹性容器 ,在父容器添加弹性布局，即可使得容器内容采用弹性布局方式显示。在此处，父容器为body，
+    在body里使用了弹性布局，即可让Body里的内容wrapper和1x以弹性布局方式显示*/
+    /* 弹性布局，第二种水平垂直剧中布局的方法。第一种是position:absolute;transform:translatesd();等 */
+    display: flex;
+    /* 弹性容器里的属性 */
+    /* justify-content:center 让wrapper处于X轴正中间 。body一开始没有设置宽高，那么它的大小即由里面的内容,wrapper决定*/
+    justify-content: center;
+    /* align-items:center 让wrapper处于Y轴正中间。但是从页面检查来看，Body的大小并不是浏览器的大小，
+    而是比浏览器整个屏幕的大小小很多，
+    所以直接这样设置并不能得到wrapper处于整个屏幕Y轴正中间的位置。 所以应该给body添加上高度属性*/
+    align-items: center;
+    /* 通常在设置背景图的时候，会加上一个与背景图相似的颜色，因为网页加载图片需要时间，在这缓冲时间内，背景色会比背景图先显示出来。那么不至于在背景图显示出来之前留白。 */
+    background: #4c4c4c url('https://unsplash.it/1500/900?image=1021');
+    /* cover属性的意思是，容器有多大，图片就放多大。 */
+    background-size: cover;
+}
+.wrapper{
+    width: 850px;
+    /* 把wrapper设置为弹性容器，那么容器里的内容采用弹性布局 */
+    /* 把两个块级容器放在同一行的第二种方式，设置弹性布局。弹性布局自动把两个块级元素放在了同一行 */
+    /* 由于父容器wrapper被设置为了弹性布局，那么它的子容器vedio和speed应该等比(1:1)
+    ----因为两个子容器里都写了flex:1;,继承它的宽度850px */
+    /* 但是这里vedio标签没有和speed一比一的原因是，vedio标签的大小有底线，再小也不能小于最小值 ,那么这里
+    vedio没管父容器，自己给自己定宽，剩下的宽度为speed的宽度*/
+    display: flex;
+}
+.vedio{
+    /* 弹性布局 */
+    /* x轴偏移量，y轴偏移量，阴影的范围大小  */
+    /* rgba透明度 */
+    box-shadow:0 0 1px 3px rgba(0,0,0,0.1); 
+    
+
+}
+.speed{
+    background: #efefef;
+    flex:1;
+    display: flex;
+    /* 从弹性布局开始的时候 */
+    align-items: flex-start;
+    margin:10px;
+    /* 挤的是父容器 */
+    border-radius: 50px;
+    box-shadow:0 0 1px 3px rgba(0,0,0,0.1); 
+    overflow: hidden;
+}
+
+.speed-bar{
+    width:100%;
+    height: 16.3%;
+    /* 渐变背景色 */
+    background:linear-gradient(-170deg,#2376ae 0%,#ce6ecf 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:2px;
+    color: #fff;
+    cursor: pointer;
+
+}
