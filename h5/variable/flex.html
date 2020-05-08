@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            display: flex;
+            flex-direction: column;
+            /* 弹性布局方向设置为垂直方向 */
+            min-height: 100vh;
+            /* vh相对单位 */
+
+
+
+        }
+        main{
+            /* flex:1; */
+            /* 表示它是主体内容，占据其他子元素占据后剩下的内容 */
+            /* flex: flex-grow flex-shrink flex-basis|auto|initial|inherit; */
+            flex-grow: 1;
+            /* flex-grow 该属性用来设置当父元素的宽度大于所有子元素的宽度的和时（即父元素会有剩余空间），
+            子元素如何分配父元素的剩余空间。 flex-grow的默认值为0，意思是该元素不索取父元素的剩余空间，
+            如果值大于0，表示索取。值越大，索取的越厉害。
+            举个例子: 父元素宽400px，有两个子元素：A和B。A宽为100px，B宽为200px。 
+           则空余空间为 400-（100+200）= 100px。 如果A，B都不索取剩余空间，则有100px的空余空间。
+ */
+        }
+        header{
+            line-height: 50px;
+            background-color: red;
+            color:#ffffff;
+            text-align:center;
+
+        }
+        footer{
+            line-height: 50px;
+            background-color: #eee;
+            color: #333333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 移动端的经典布局  flex  html5+css3 -->
+    <div class="wrap">
+    <header>头部</header>
+    <main class="main">主题</main>
+    <!-- main：html5的语义化标签 -->
+    <footer>底栏</footer>
+</div>
+</body>
+</html>
