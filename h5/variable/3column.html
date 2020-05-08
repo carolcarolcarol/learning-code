@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            display: flex;
+            flex-direction: column;
+            /* 弹性布局方向设置为垂直方向 */
+            min-height: 100vh;
+           
+            /* vh相对单位 */}
+        header, footer {
+            /* flex-basic flex-grow flex-shrink  */
+            flex: 0 0 50px;
+        }
+        .content{
+            display:flex;/*再开辟一个新的空间*/
+           
+            flex-grow: 1;
+
+        }
+        .main{
+            flex:1;
+        }
+        .nav, .ads{
+            /* flex: flex-grow flex-shrink flex-basis|auto|initial|inherit;
+               属性值
+               值	描述
+               flex-grow	一个数字，规定项目将相对于其他灵活的项目进行扩展的量。
+               flex-shrink	一个数字，规定项目将相对于其他灵活的项目进行收缩的量。
+               flex-basis	项目的长度。合法值："auto"、"inherit" 或一个后跟 "%"、"px"、"em" 或任何其他长度单位的数字。 */
+            flex: 0 0 100px;
+            background: green;
+
+
+        }
+        .nav{
+            order:-1;
+            /* 数值越大在越后，数值越小在越前 */
+            /* order 设置弹性盒对象元素的顺序：设置或检索弹性盒模型对象的子元素出现的順序。。注意：如果元素不是弹性盒对象的元素，则 order 属性不起作用。 */
+            /* 子元素排序order 设置了在元素上，按照从小到大的顺序进行排序 */
+            /* flex-order ??????? */
+        }
+    </style>
+</head>
+
+<body class="wrap">
+    <!-- 三栏布局  -----双飞翼 弹性布局 圣杯布局 -->
+   
+        <header>头部</header>
+       <div class="content">
+           <!-- 为什么main要写在第一个位置 -->
+           <!-- 首先要看到最主要内容 ，绘制页面需要花时间，main里面的内容重要，吸引用户群眼球，所以先画main-->
+            <main class="main">内容区</main>
+            <nav class="nav">侧边导航</nav>
+            <aside class="ads">侧边栏</aside>
+        </div>
+        <!-- main：html5的语义化标签 -->
+        <footer>底栏</footer>
+
+</body>
+</html>
