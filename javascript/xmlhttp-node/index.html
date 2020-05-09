@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    abc
+    <script>
+        // 用服务器 地址打开网页
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST','/getPosts',true);//请求url,异步方式请求
+        // post请求方式将要传给后端的参数放在实体里传输，而post直接把要传给后端的参数放在url里传输
+         xhr.timeout = 2000;
+         xhr.setRequestHeader('X-Real-ip','211.161.244.70');
+         xhr.setRequestHeader('Content-Type','application/json');
+        //  后端会根据前端传过去的content-type来解析数据，上一行的意思是告诉后端，
+        //前端传过去的数据是json格式,那么后端就会以json格式来解析数据
+        // application/json  --- MIME格式
+         xhr.addEventListener('timeout',function(){
+           console.log('timeout');
+       })
+        xhr.addEventListener('readstatechange',function(){
+            if(xhr.readyState === 4 ){
+                console.log(xhr.response,xhr.status)
+            }
+        })
+        let obj = {
+            query:'js',type:'all'
+
+        }
+        xhr.send(JSON.stringify(obj));
+
+// 封装请求
+        function anxios(method,url,params={},headers={}){//params发送给后端的数据
+            const xhr = new XMLHttpRequest();
+            xhr.open(method,url,true);//open要放在前面
+            for(let k in headers){
+                // k拿到对象的属性名，headers【k】拿到对象的值
+                xhr.setRequestHeader(k,headers[k]);
+
+            }
+            
+            xhr.addEventListener('readstatechange',function(){
+
+            })
+            let data = headers['Content-Type'] && 
+            headers['Content-Type'] === 'application/json'?JSON.stringify(params) : params;
+
+            xhr.send(data);
+
+
+        }
+        anxios('POST','/getPosts'
+        ,{type:'all',query:'js'}
+        ,{'X-Real-ip':'211.161.244.70','Content-Type':'application/json'})
+    </script>
+</body>
+</html>
+
+<!-- // 数组
+var A=[4,6,74,67];
+for in:拿到的是数组下标
+
+for (let i in A){
+console.log(i);
+}
+//0，1，2，3
+
+for of:拿到的是数组元素
+
+for (let i of A){
+console.log(i);
+}
+字符串
+
+var str="hellllo world";
+for in:拿到的是字符串下标
+
+for (let i in str){
+    console.log(i)
+}
+//0 1 2 3 4 5 6 7 8 9 10 11 12
+for of:拿到的是字符串中的字符
+
+for (let i of str){
+    console.log(i);
+}
+//  h e l l l l o   w o r l d
+set 和 map:不能使用for in  （没有下标）
+
+可以使用for of (可迭代对象)
+
+var s=new Set([1,3,6,5,4,3]);
+for (let i of s){
+    console.log(i);
+}
+// 1 3 6 5 4 
+
+let map = new Map([["name","nick"],["age",25]]);
+//Map(2) {"name" => "nick", "age" => 25}
+for (let i of map){
+    console.log(i);
+}
+// ["name", "nick"]
+// ["age", 25]
+ 
+
+ 对象不是可迭代对象，所以不能对其使用for of
+
+var obj={
+    name:‘alex‘,
+    age:20
+};
+但可以使用for in:拿到的是对象的属性名
+
+for (let i in obj){
+    console.log(i);
+}
+// name
+// age -->
