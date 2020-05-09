@@ -1,0 +1,90 @@
+<script>
+    // anxious lib bulidurl.
+    // anxious key 和value都要编码（encode）一下，出于安全性的考虑，有一些特殊字符，可能对后端sql有威胁
+    // 因为anxious用于浏览器环境或者是node.js环境，如果是在浏览器中使用时，keyword=....会被浏览器自动编码
+    // 但是如果是Node.js使用环境，则不会自动将中文编码，而node环境里，不编码会报错。所以anxious库对key和value做编码，出于安全性考虑
+    // 下文中keyword=海阔天空，里面那个中文的海阔天空会被浏览器自动编码
+    function encode(str){
+        // 编码处理，调用api
+        return encodeURIComponent(str)
+        .replace('%5B','[').replace('%5D',']');
+        // replace把编码过后的[]重新转换回[]，就是对其他元素进行编码，但是不对[]进行编码
+        // encode编码举例，例如传一个空格，那么这个空格会被编码成20%
+    }
+    
+    function buildUrl(url,params){
+        let parts = [];
+        // Object.keys()获取对象所有的key
+        Object.keys(params).forEach(function(key){
+            // 第一步，keywords='海阔天空'
+            // 第二步，用&把每个传送的key=value连接起来
+            
+            let value= params[key];
+            // params.key是获取key的属性，和param[key]不一样？？？？？？？？？、
+            if(value === null || typeof value === 'undefined'){
+                return;
+
+            }
+            // 以下if ,else是为了兼容是数组和不是数组的情况,
+            // 是数组就把每个key写成 例如 c[]的形式
+            // 不是数组就把每个key的value写成数组形式，
+            // 例如把原本keyword:海阔天空写成,keyword:[海阔天空]，后文拼接取值时，
+            // 取到的value也变成了数组，而数组可以做循环，可以将数组里的值取出来
+
+            if(Array.isArray(value)){
+                // 如果value是数组
+                key += '[]';
+                //如果是数组比如，c:[1,2,3]
+                // 则需要把它拼成 c[]=1&c[]=2&c[]=3
+            }else{
+                value = [value];
+                // 不是数组则转成数组
+            }
+            console.log(key,value);
+            // 从ifarray....到这里，不管是不是数组，现在都是数组了，都可以循环，
+            //要把value里的每一项追加到key后面，else的情况里，数组里只有一项
+            value.forEach(val=>{
+                let part = `${encode(key)}=${encode(val)}`
+            parts.push(part);
+            console.log(part)
+            })
+
+            // let part = `${encode(key)}=${encode(value)}`
+            // parts.push(part);
+            // 数组的join 方法，可以把数组中字符串拼接起来，还能指定通过什么符号拼接
+
+            
+
+
+        })
+        console.log(parts)
+        
+        // url中#后面的内容是不会传递给后端的，即#后的内容只在前端里有效用
+         const hashIndex = url.indexOf('#');
+        // // 如果存在返回 #所在位置，如果不存在返回-1
+         if(hashIndex !== -1){
+        //     // 如果存在，将#包括#后面的内容从url中截去
+            url = url.slice(0,hashIndex);
+        //     // 找到#位置，截取从0到#位置
+        // slice截取内容（index,index-1）
+         }
+        
+        // console.log(url);
+        //return url;
+        url += '?'+ parts.join('&');
+    //     console.log(url);
+        return url;
+    // }
+        }
+
+        // 如果url本身存在url该怎么处理？？？？？？？？？？？？？？？？？？？？
+        // 存在两个问号的条件下，怎么处理(一个是网址本身有的问号，一个是拼接数据需要的问号)
+    let url = buildUrl('http://neteasecloudmusicapi.zhaoboy.com/search?a=1#header',{
+        keywords: '海阔天空',
+         type: 'all',
+         query: 'js',
+        c:[1,2,3]
+    })
+    
+    
+</script>
