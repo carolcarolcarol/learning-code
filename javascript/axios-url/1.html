@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <!-- //bootcdn引入anxios-->
+        <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script> 
+    <script>
+        let params = {
+            query: 'js',
+            type: 'all'
+        }
+        params.user = 'xxx';
+        delete params.query;
+
+        let obj = {
+            keywords: '海阔天空'
+        }
+        // axios是一个第三方基于XMLHttprequest的库
+        // fetch 浏览器原生的 另外一个发请求的api
+        axios({
+            method:'get',
+            url:'http://neteasecloudmusicapi.zhaoboy.com/search',
+            params:{
+                keywords:obj
+            }
+        })
+        .then(function(res){
+            // promise then方法
+            console.log(res);
+        })
+            // 有了一个url,有了一个对象，
+            // 对象每一项 key value 都要按照url的规则拼接到url上
+
+
+
+
+//             //search的内容  keywords=jay
+//             http://neteasecloudmusicapi.zhaoboy.com/search?keywords=jay
+//     //keyword就是前端传给后端的搜索关键词，keyword=周杰伦
+//     xhr.open('get',
+//     //这里用模板字符串的形式，将keywords的内容替换成input框里输入的内容
+//     `http://neteasecloudmusicapi.zhaoboy.com/search?keywords=${val}`,
+//  true);
+//         })
+// 如上文，原生的封装需要自己拼接，而axios用别人写好的方法，关键词变成了一个对象
+// 操作对象比操作字符串要灵活，
+// 例如
+// let params = [{
+//     query:'js',
+//     type:'all'
+// }]
+// // 如果要增加一个对象里的key和value
+// params.user = 'xxx'
+// // 如果要删除原有的key,value
+// delete params.query;
+// 最后再把修改过的params交到axios({params:params})方法里去就可以了，这个方法会自动帮忙拼接
+
+    </script>
+</body>
+</html>
