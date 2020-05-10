@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>append child DOM API</title>
+</head>
+<body>
+    <!-- <ul> 标签定义无序列表。 -->
+   <ul id="users">
+
+   </ul>
+<script>
+   const students = [{
+       id: 1,
+       name: '王美琪',
+       href: "https://www.baidu.com/"
+   },{
+       id: 2,
+       name: '顾泽',
+       href: 'http://www.jjwxc.net/onebook.php?novelid=3742941'
+   },{
+       id: 3,
+       name: '满船清梦压星河',
+       href: 'http://www.jjwxc.net/onebook.php?novelid=4099864'
+   }]
+   
+//    const oUL =document.getElementById('users');
+//    const oLi = document.createElement('li');
+//    const textnode =document.createTextNode('满船星梦压清河');
+//    console.log(oLi);
+//    oUL.appendChild(oLi);
+//    oLi.appendChild(textnode);
+   
+   //如果一个节点的nodeType值是1，它就是一个标签对象
+   //标签对象可以给它设置属性，如
+//    li里加一个a href网址，点击跳转
+
+   const oUL=document.getElementById('users');
+   const fragment = document.createDocumentFragment(); //文档碎片
+   oUL.style.fontSize='20px';
+   for(let student of students){
+       
+       const oText = document.createTextNode(student.name);
+       const href = document.createTextNode(student.href);
+       const oLi = document.createElement('li');
+       const oA =document.createElement('a');
+       oA.className='href';
+       oLi.className='item';
+       oLi.appendChild(oText);
+       oLi.appendChild(oA);
+       oA.setAttribute('href',student.href);//这里不能用const的那个href,可能是类型不一样？
+       oA.setAttribute('target','_blank');
+       oA.appendChild(oText);//把设置好值的a节点添加到oText上，点击名字，跳转网页
+       //点击a标签时，弹出名字
+       oA.addEventListener('click',function(event){
+           event.preventDefault();//阻止a标签默认的跳转网页行为
+           alert(this.innerText)
+       },false);
+       fragment.appendChild(oLi);//性能优化，不需要重新绘制刷新
+       oUL.appendChild(fragment);
+       //oUL.appendChild(oLi);//有性能问题，每次将oLi添加到oUL上，页面就会重新绘制和刷新（每次appendchild）
+       //js dom性能消耗较大 三次appendchild就是三次重新绘制
+       // 单纯的创造createlementoli并不需要重新绘制，因为它属于内存中的节点，创造后并没有真正需要在页面上显示出来。
+    //    只有当它要挂在oul上显示出来，把内存之中的对象换成页面上真正显示的html标签，显示在页面上的东西需要重新绘制，所以性能消耗大
+       oUL.addEventListener('click',function(){
+           alert('sss');
+
+       });
+       //如何只在ul上点击，然后把名字打印出来？
+   }
+   const studentLis = document.querySelectorAll('.item');
+   //在li里面，a前面创建一个节点，存放id
+   studentLis.forEach((li,index)=>{
+       let oA = li.querySelector('a');
+       const oSpan = document.createElement('span');
+       oSpan.appendChild(document.createTextNode(students[index].id));
+       li.insertBefore(oSpan,oA);//把oSpan放到oA前面，即把span放到a前面
+
+   })
+       
+  
+   //console.log(studentLis);
+//    studentLis.foreach(li=>{
+//        console.log(li);
+//    })
+
+//studentLis是个伪数组，可以用for,forerach,可以length下标访问，但是仅此而已。其他更高级的功能不能用，比如箭头函数
+// 伪数组：如何转化成为真正的数组?
+//console.log(studentLis[0].childNodes[0].innerHTML);
+
+   //js节点对象-->html对象的转化，通过appendchild
+//注意:
+// 首先创建一个节点，
+// 然后创建一个文本节点，
+// 然后将文本节点添加到LI节点上。
+// 最后将节点添加到列表中。
+// var node=document.createElement("LI"); -->标签节点
+// 	var textnode=document.createTextNode("Water");  -》文本节点
+// 	node.appendChild(textnode);
+// 	document.getElementById("myList").appendChild(node);
+
+//dom js 里的数据结构 tree，哪怕是文字，都是节点，都是tree
+//arr->map->html arr->join->url,数组变成map,map变成html数组，join一下，变成url???
+</script>
+    <!-- dom动态编程：比如：innerHTML,appendChild -->
+    
+</body>
+</html>
