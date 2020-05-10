@@ -1,0 +1,267 @@
+<!-- 交通灯： -->
+<!-- setinterval和settimeout的区别，p函数调用红黄蓝的效果 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin:0;
+        padding:0;
+        }
+        li{
+            width: 100px;
+            height: 100px;
+            background-color: #666;
+            border-radius: 50%;
+            margin-top:100px;
+
+        }
+        ul.stop li:nth-child(1){
+            background-color: red;
+        }
+        ul.warn li:nth-child(2){
+
+            background-color: yellow;
+        }
+        ul.pass li:nth-child(3){
+
+            background-color: green;
+}
+
+    </style>
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script>
+        const ul = document.querySelector('ul');//获取ul前面不用加点
+        //settimeout定时器
+        //为什么这段settimeout是这样套的？如果不嵌套，单独三个定时器，那么就把时间分别设为1s,2s,3s
+        // setTimeout(()=>{
+        //     ul.className='stop';
+            
+        //     setTimeout(()=>{
+        //         ul.className='warn';
+        //         setTimeout(()=>
+        //         {
+        //             ul.className='pass';
+        //             setTimeout(()=>{
+        //                 ul.className='stop';
+        //             },2000)
+        //         },1000)
+        //     },1000)
+        // },1000)
+        // //1000毫秒，等于1秒，classname给元素加类名
+
+
+
+
+        // //premise是异步，是一个类
+        //promise异步任务有可能实现也有可能不实现
+
+        // let p = new Promise(function(resolve,reject){
+        //     // promise有三种状态:
+        //     //1.fulfilled成功
+        //     //2.rejected失败
+        //     //3.pending处理中
+
+        //     //resolve,reject是形参，取什么名字都可以，传入是为了确定状态
+        //     //如果调用第一个形参 resolve();  promise就认为这项任务成功了
+        //     // 调用reject,则代表任务失败
+        //     // 默认状态是pending
+        //     // 综上，状态变化：pending--->fulfilled
+        //     // 或者pending-->rejected
+        //     setTimeout(()=>{
+        //         resolve();
+        //     },1000);
+
+        // })
+        // let p = new pro.......这种写法
+        //这样写第一个一秒结束之后，由于调用了resolve函数，所以p的状态就变成了fulfilled，所以之后的两个then会在1s后立刻执行，
+        //因为它们不需要等结果，三个返回的都是同一个p。P指向的都是同一个ProMise,所以将上文let p=一个promise方法，
+        // 改成下文p=一个函数
+
+        let p = function(){
+            return new Promise(function(resolve,reject){
+                setTimeout(()=>{
+                    resolve();
+                },1000)
+            })
+        }
+        // p函数p每调用一次，都会返回不同的promise,每调用一次，都会new一个全新的Promise
+
+
+        setInterval(() => {
+            light();
+            
+        }, 3000);
+        light();
+
+        //promise有个then方法,表示Promise异步任务成功了之后要做的事
+        // 由于p不再是一个变量，而是一个函数，所以要先调用p函数才能生成then方法
+        // p.then(function(){
+            function light(){
+            p().then(function(){
+            //第一个灯间隔一秒
+            ul.className='stop';
+            //promise then方法， 返回了一个promise,还可以在后面链式调用 then,然后也会等待着这个promise,看它结果是成功还是失败
+
+            // return p;
+            // 由于p是一个函数，那么return也不再是p，而是p调用完的结果
+            return p();
+
+        })
+        // 链式调用then,这个then会等待上一个一秒promise的结果(等上一个return p的结果），看它是成功还是失败，如果成功就继续执行这个then
+        .then(()=>{
+            // 每个then等一秒
+            ul.className='warn';
+            return p()
+        })
+        .then(()=>{
+            ul.className='pass';
+           
+            
+        })
+    }
+        // promise有个catch方法,表示Promise异步任务失败了之后要做的事
+        p().catch()
+   
+    </script>
+</body>
+</html>
+
+<!-- setTimeout()方法在等待指定的毫秒数之后执行一个函数。
+语法:
+window.setTimeout(function, milliseconds);
+
+function : 第一个参数是要执行的函数
+
+milliseconds : 表示执行前的毫秒数.
+
+例如，我们希望在用户按下“点击我！”按钮2秒后弹出一个提示框。
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+
+ 
+
+<button onclick="setTimeout(gfg, 2000);">点击我！</button>
+
+ 
+
+<script>
+
+    function gfg()
+
+    {
+
+        alert('欢迎来到PHP中文网！');
+
+    }
+
+</script>
+
+ 
+
+</body>
+
+</html>
+输出:
+
+一旦用户按下“按我”按钮，然后在暂停2秒后，会弹出一个框。
+
+
+
+
+
+setInterval()方法在每个给定的时间间隔重复一个给定的函数。
+语法:
+window.setInterval(function, milliseconds);
+function : 第一个参数是要执行的函数
+milliseconds :表示每次执行之间的时间间隔的长度。
+
+代码示例如下：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+</head>
+
+<body>
+
+ 
+
+<p>我会说“你好”很多次！</p>
+
+ 
+
+<p id="GFG"></p>
+
+ 
+
+<script>
+
+    var myVar = setInterval(myTimer, 1000);
+
+ 
+
+    function myTimer()
+
+    {
+
+ 
+
+        document.getElementById("GFG").innerHTML += "<p>你好</p>";
+
+    }
+
+</script>
+
+ 
+
+</body>
+
+</html>
+
+每隔一秒就会显示一条新的“你好”消息。 -->
