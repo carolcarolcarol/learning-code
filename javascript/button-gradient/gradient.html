@@ -1,0 +1,109 @@
+<!-- 按钮，鼠标移动渐变事件
+1.渐变 radial-gradient
+2.鼠标跟随移动事件 Mousemove
+3.用什么元素来做渐变元素
+一个轻量级标签：伪元素：    ：：before -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root{
+            /* 伪元素和root之间的关系？？？？？为什么这三行放在伪元素里就有问题 */
+            /* 获取selectquery的值修改x,y,改的是button的xy 而伪元素里面的xy 没被修改 
+            如果设置在root 伪元素就可以相当于继承xy的值 */
+            /* 在声明全局 CSS 变量时 :root 会很有用： */
+            /* :root选择器用匹配文档的根元素。 */
+
+/* 在HTML中根元素始终是HTML元素。 */
+            --size:0px;
+            --y:0px;
+            --x:0px;
+        }
+        .button{
+        
+            background-color: #f72359;
+            padding:1em 2em;
+            border: none;
+            color:white;
+            font-size: 1.2em;
+            cursor: pointer;
+            outline: none;
+            /* 轮廓 */
+            overflow: hidden;
+            border-radius: 100px;
+            position:relative;
+
+}
+.button::before{
+    /* 伪元素：在这个元素开始之前/之后插入 */
+    /* --size:100px; */
+    /* 伪元素必须有content属性 */
+    /* --size:0px;
+    --y:0px;
+    --x:0px; */
+    content:'';
+    position:absolute;
+    left:var(--x);
+    top: var(--y);
+    width:var(--size);
+    height:var(--size);
+    /* background-color: green;  调试看--size影响的大小 */
+    background: radial-gradient(circle closest-side ,#4405f7,transparent);
+    /* 颜色渐变 圆形 指定径向渐变的半径长度为从圆心到离圆心最近的边 ，起始颜色，终止颜色，从蓝色到最后透明 */
+    transform: translate(-50%,-50%);
+    transition:width .2s ease,height .2s ease;
+    /* 相对于自己的中心点，往左移一半，再往上移一半 */
+/* background-image: radial-gradient(shape size at position, start-color, ..., last-color);
+值	描述
+shape	确定圆的类型:
+ellipse (默认): 指定椭圆形的径向渐变。
+circle ：指定圆形的径向渐变
+size	定义渐变的大小，可能值：
+farthest-corner (默认) : 指定径向渐变的半径长度为从圆心到离圆心最远的角
+closest-side ：指定径向渐变的半径长度为从圆心到离圆心最近的边
+closest-corner ： 指定径向渐变的半径长度为从圆心到离圆心最近的角
+farthest-side ：指定径向渐变的半径长度为从圆心到离圆心最远的边
+position	定义渐变的位置。可能值：
+center（默认）：设置中间为径向渐变圆心的纵坐标值。
+top：设置顶部为径向渐变圆心的纵坐标值。
+bottom：设置底部为径向渐变圆心的纵坐标值。
+start-color, ..., last-color	用于指定渐变的起止颜色。 */
+
+
+
+}
+.button:hover::before{
+    --size:400px;
+}
+    </style>
+    
+</head>
+<body>
+     <button class="button">按钮</button>
+     <script>
+         document.querySelector('button').
+         addEventListener('mousemove',function(e){
+             //before中心点在哪里？
+            //  console.log(e);
+            //  console.log(e.pageX,e.pageY)
+            //  pageX 鼠标相对于整个屏幕的偏移量，鼠标在浏览器上停留时的坐标）
+            const x = e.pageX - e.target.offsetLeft;
+            // 任何一个元素的offsetleft都可以得到该元素相对于它父元素距浏览器左侧的偏移量,(该元素的父元素距浏览器的左侧的距离)
+            // e.target,target是对象标签，用它来找到对象的位置，e.target即为伪元素的父元素
+            // offsetTop就是获取某一个dom结构到浏览器顶部的距离，那么offsetLeft就是它的父元素距左边的偏移量
+            const y = e.pageY - e.target.offsetTop;
+            //  js设置css变量
+            // --size
+            // before跟着鼠标移动
+            console.log(x,y);
+            e.target.style.setProperty('--x',`${x}px`);
+            e.target.style.setProperty('--y',`${y}px`);
+         })
+     </script>
+     
+</body>
+</html>
