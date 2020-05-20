@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+</head>
+<body>
+    <ul id="users"></ul>
+    <script>
+    //console.log('localstorrage')
+    window.onload = function(){
+    const usersUL = document.getElementById('users');
+    const users =JSON.parse(localStorage.getItem('users'));
+    // 把取出来的string格式在重新变回json格式
+    console.log(users);
+    if(users){
+        console.log('已经缓存了');
+        usersUL.innerHTML =users.map(user =>`
+         <li>
+            ${user.username} -  ${user.hometown}
+            </li>
+         
+         `).join('');
+        //  join() 方法用于把数组中的所有元素放入一个字符串。
+
+// 元素是通过指定的分隔符进行分隔的。
+        return;
+    }
+
+    // 本地有数据就直接从本地取数据,否则就发送请求,从/users那里取得数据存到Localstorage里面,这样下次就有数据了
+     fetch('/users')
+     .then(data=>data.json())
+     .then(data =>{
+         localStorage.setItem('users',JSON.stringify(data));
+        //  取出来的数据存到localstorage里也只能存字符串形式,所以要对json格式进行转换
+        //  key:users,value:data
+        // 可在 application---localstorage里查看
+         usersUL.innerHTML =data.map(user =>`
+         <li>
+            ${user.username} -  ${user.hometown}
+            </li>
+         
+         `).join('');
+     })
+    
+    }
+    
+    </script>
+</body>
+</html>
+
+<!-- 虽然已经缓存了,但是如果服务器端内容发生改变怎么办? -->
+<!-- 不管怎样,都发送请求,如果有缓存就直接用缓存里面的内容,然后去请求看缓存的内容是否发生了变化,如果请求返还的结果是304,说明没变化,不必动,如果不是,说明内容发生了改变,要把原来缓存里的内容换成新的改变了的内容,页面显示内容也要更换 -->
