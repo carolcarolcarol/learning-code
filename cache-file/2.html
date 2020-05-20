@@ -1,0 +1,76 @@
+<!-- 一个按钮，点击后在下方显示点击次数，当刷新页面后，如何让页面记住上一次点击后的次数，而不是从零开始计算 -->
+<!-- localStorage sessionStorage cookie -->
+<!-- cookie 在浏览器中存储的文本 http req,res每次都要带上cookie传到服务器端，适合放用户简单的信息，放多了会影响传输时间 -->
+<!-- 区别 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        <button type="button" onclick="clickCounter()">点我</button>
+        <div id="result"></div>
+    </p>
+    <script>
+        // let count =0;
+        // let result = document.getElementById('result');//查询需要花时间，所以性能考虑，不能放在循环体里
+        // function clickCounter(){
+        //     count++;
+        //     result.innerHTML=count;
+        // }
+
+// storage将点击的次数保存到本地
+// instanceof看对象是否是类的实例  class Plane{}  const plane = new Plane();  plane instanceof Plane--->会返回true;
+    
+
+
+// localstorage 只要不清掉，将会长久存在，比起cookie可以存更多的东西，可以存css,html,js等一切文本
+// localstorage可以把一些关键的css,js等本地化，那么下次打开页面将会很快
+// function clickCounter(){
+//             const result = document.getElementById('result')
+//             if(typeof Storage !== "undefined"){//作用：看浏览器是否支持Storage,浏览器嗅探
+//                 if(localStorage.clickCounter){//看localStorage里是否设置了clickCounter,第一次点击肯定没有
+//                     localStorage.clickCounter=Number(localStorage.clickCounter)+1;
+//                     // number将类型转换成整数
+
+//                 }else{
+//                     localStorage.clickCounter=1;
+
+//                 }
+//                   result.innerHTML = `你在按钮上已经点击了${localStorage.clickCounter}次`;
+
+//             }else{
+//                 result.innerHTML="sorry,浏览器不支持LocalStorage."
+
+//             }
+//         }
+
+
+
+
+
+// sessionstorage  只在这一次的会话中存在  短暂存储
+        function clickCounter(){
+            const result = document.getElementById('result')
+            if(typeof Storage !== "undefined"){//作用：看浏览器是否支持Storage,浏览器嗅探
+                if(sessionStorage.clickCounter){//看localStorage里是否设置了clickCounter,第一次点击肯定没有
+                    sessionStorage.clickCounter=Number(sessionStorage.clickCounter)+1;
+                    // number将类型转换成整数
+
+                }else{
+                    sessionStorage.clickCounter=1;
+
+                }
+                  result.innerHTML = `你在按钮上已经点击了${sessionStorage.clickCounter}次`;
+
+            }else{
+                result.innerHTML="sorry,浏览器不支持LocalStorage."
+
+            }
+        }
+    </script>
+</body>
+</html>
