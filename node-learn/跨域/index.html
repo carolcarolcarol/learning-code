@@ -1,0 +1,41 @@
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<!-- link，img,script引入资源，不算跨域 -->
+<script>
+    // 前端用axios向后端index.js里面的服务器发送请求，由于前端域名和后端域名不同，(前端页面用live-server打开）所以属于跨域行为。
+    // 在前端写入一条cookie
+    document.cookie = 'abc=123';
+    // 可去application 里的cookies查看是否写入
+    // 跨域请求的时候，要设置withCredentials才会自动在请求中发送cookies
+    // cookie只能在Localhost的域名下生效127.0.0.1这种不能生效
+    // 可以查看cookie是否被写入localhost://5500，network中request headers里面
+    axios({
+        // 1.预检preflight请求，试探一下跨域请求是否能够通过（后端设置了一大串的writehead）
+        // 如果测试预检能够通过，之后再发送真实请求，此处为：.../api
+        // 某些简单请求不会触发cors预检请求，比如Post,get等请求都属于简单请求
+        // 简单请求直接发送真实请求
+        // 非简单请求会先发送预检请求，以options 方式发送预检请求，通过后才会发送真实请求
+        withCredentials:true,
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        // axios加自定义请求头，加了后又属于跨域情况
+        url:'http://localhost:9090/api',
+        method:'POST',
+        
+       data:{
+           
+                 
+            username:'sss',
+          
+            password:'mmm'
+        }
+        // 如果用data{}传输数据，即使后端加了Access-Control-Allow-Origin,也还是会报错
+    // 把data传输过去的时候，network requesr-payload里会有传输的数据，然后request-header里会有Content-Type: application/json;charset=UTF-8
+    // 因为axios会把data{}对象当做json处理，而cOntent-type也是不被允许的，报错为：Request header field content-type is not allowed by Access-Control-Allow-Headers in preflight response.
+    // 所以要将content-type也加入后端的writehead里，写上 Access-Control-Allow-Headers ：content-type
+    })
+    .then(res =>{
+        console.log(res);
+    })
+</script>
+
+<!-- 直接打开Index.html时，origin是null,当把后端.....-origin设为*时，origin为null的也可以访问 -->
+<!--  -->
