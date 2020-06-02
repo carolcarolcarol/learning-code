@@ -1,4 +1,5 @@
 function partition(num,left,right){
+    if(left >= right) return;
    let provit = num[left];
    while(left<right){
        //left找比基准值大的数，放到后面
@@ -13,17 +14,24 @@ function partition(num,left,right){
 
     // 基准值在左边，从右边开始扫描，找比基准值小的数
     // 这种循环要把外层循环的条件附加到内层里？？？？？？
-    while(num[right]>=provit) right--;
+    while(left<right&&num[right]>=provit) right--;
     num[left] = num[right];
-    while(num[left]<=provit) left++;
+    while(left<right&&num[left]<=provit) left++;
     num[right]=num[left];
-
+    
 
 
 }
 num[left] = provit;
+// return left;
+ partition(num,0,left-1);
+ partition(num,left+1,right);
 
 }
 const arr = [8,9,7,-1,5];
-partition(arr,0,arr.length-1);
+const quickSort = function(arr){
+    partition(arr,0,arr.length-1);
+}
+// partition(arr,0,arr.length-1);
+quickSort(arr);
 console.log(arr);
