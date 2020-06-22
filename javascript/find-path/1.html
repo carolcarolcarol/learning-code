@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        #container{
+            width: 700px;
+            font-size: 0;
+        }
+        .cell{
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: gray;
+            border-right: 1px solid white;
+            border-bottom: 1px solid white;
+            vertical-align: middle;
+        
+    
+        }
+    </style>
+    
+    
+    
+    <div id="container"></div>
+    <script>
+        const container = document.getElementById('container')
+        let arr = new Array(10000).fill(0);
+        // fill(0)用0来填充
+        // console.log(arr);
+        arr.forEach((item,i)=>{
+            // 列出数组的每个元素foreach
+            const cell = document.createElement('div')
+            cell.classList.add('cell')
+            // classlist属性为 <div> 元素添加 class:
+            container.appendChild(cell);
+            cell.addEventListener('mousemove',()=>{
+                // 浏览器触发事件是有一定频率的，如果超过了这个频率，速度过快，有些格子可能不会变黑
+                if(mouse)
+                {
+                    cell.style.backgroundColor = 'black';
+                    arr[i]=2;
+                }
+            })
+            // 绑定后鼠标经过cell时会触发Mousemove事件,然后判断鼠标是否摁下了，mousedown
+        })
+        let mouse = false;
+        document.addEventListener('mousedown',()=>{
+            mouse = true;
+        })
+        document.addEventListener('mouseup',()=>{
+            mouse = false;
+        })
+        function findpath(map,start,end){
+            // 搜索的入口
+            // queue里是所有的选择？shift是从所有的选择中选出一条来，因为选择一个点又会产生新的选择，这些选择又要Push到queue里面去，所有有可能产生正确结果的点都在queue里，然后让while循环每次都尝试
+            let queue = [start];
+            function insert(x,y){
+                // y*100跳到当前这个行，+x找到在一维数组中的位置？？？？？？、
+                // 一开始是用0来填充的，走过的变成了3，mouse按过的变成了2，判断是否为零，应该是这个值是否走过
+                if(map[y*100+x] !== 0) return;
+                if(x<0||x>=100||y<0||y>=100) return;
+                map[y*100+x]=3
+              container.children[y*100+x].style.backgroundColor ='green'
+                   queue.push([x,y]);
+                }
+            while(queue.length){
+               
+
+
+
+                // 队列里拿到的是每个点，每次只出一个点，每个点可走的方向是上下左右四个方向
+                let [x,y] =queue.shift();
+                // shift() 方法用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+
+//                  注意： 此方法改变数组的长度！
+
+//                  提示: 移除数组末尾的元素可以使用 pop() 方法。
+                 if(x===end[0]&&y===end[1]){
+                     return true;
+                 }
+                 insert(x+1,y);
+                 insert(x-1,y);
+                 insert(x,y+1);
+                 insert(x,y-1);
+                // 把新的点Push进去  push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
+
+
+
+
+
+            }
+            // 所有选择都走了一遍还没有匹配上的就返回false
+            return false;
+
+
+        }
+        // let res = findpath(arr,[0,0],[5,5])
+        // console.log(res)
+    </script>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #container {
+      width: 700px;
+      font-size: 0;
+    }
+    .cell {
+      /* 6 + 1 */
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: gray;
+      border-right: 1px solid white;
+      border-bottom: 1px solid white;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script>
+    const container = document.getElementById('container')
+    let arr = new Array(10000).fill(0);
+    arr.forEach((item, i) => {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      container.appendChild(cell);
+      // 浏览器触发事件 是由一定的频率的
+      cell.addEventListener('mousemove', () => {
+        if (mouse) {
+          cell.style.backgroundColor = 'black';
+          arr[i] = 2;
+        }
+      })
+    })
+    let mouse = false;
+    document.addEventListener('mousedown', () => {
+      mouse = true;
+    })
+    document.addEventListener('mouseup', () => {
+      mouse = false;
+    })
+    // 鼠标右键
+    document.addEventListener('contextmenu', (e) => e.preventDefault())
+    function findPath(map, start, end) {
+      // 搜索的入口
+      // 所有的选择
+      let queue = [start];
+      function insert(x, y) {
+        // map 一维数组
+        // x, y 是一个坐标点 
+        // y * 100 跳到当前这个行 
+        if (map[y * 100 + x] !== 0) return;
+        if (x < 0 || x >= 100 || y < 0 || y>= 100) return;
+        // 已经走过的点
+        map[y * 100 + x] = 3;
+        container.children[y * 100 + x].style.backgroundColor = 'green';
+        queue.push([x, y]);
+      }
+      while(queue.length) {
+        let [x, y] = queue.shift();
+        // console.log(x, y);
+        // 上下左右四个方向
+        // 匹配
+        if (x === end[0] && y === end[1]) {
+          return true
+        }
+        insert(x + 1, y);
+        insert(x - 1, y);
+        insert(x, y + 1);
+        insert(x, y - 1);
+      }
+      return false;
+    }
+    // let res = findPath(arr, [0, 0], [50, 50]);
+    // console.log(res);
+  </script>
+</body>
+</html> -->
