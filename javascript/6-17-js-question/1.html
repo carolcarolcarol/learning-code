@@ -1,0 +1,118 @@
+<script>
+
+
+
+function Page() {
+    return this.hosts;
+    // this指向谁
+    // p1.hosts
+
+  }
+  // 静态属性
+  Page.hosts = ['h11111'];
+  Page.prototype.hosts = ['h22222'];
+  // 数组是对象，所以return数组就是返回了对象，new的结果是这个对象
+   
+  var p1 = new Page();
+//   this.hosts指向谁？
+// new this指向谁
+  var p2 = Page();
+  // p2 this指向window,window.hosts 未定义所以是Undefined
+  // 要让P2有值应该  
+  Page.apply(Page)
+  
+  console.log(p1); //h2
+  console.log(p2); //h1 x  ->undefined
+
+
+// 模拟new的行为
+  function myNew(Constructor){
+    // 1.创建一个继承自 构造函数.prototype的对象
+    let obj = {}
+    // 让对象.proto指向实例原型 constructor.prototype
+    obj.__proto__= Constructor.prototype;
+    // 2、这个对象作为构造函数运行时的this
+    let res= Constructor.apply(obj);
+    // 3.new的结果 3.1如果构造函数返回一个对象了，那么new的结果就是这个对象
+    //            3.2如果构造函数没有返回一个对象，new的结果就是我们刚才创建的这个对象
+    return typeof res === 'object' ? res: obj;
+  }
+  const p3 = myNew(Page)
+
+// 试验构造函数是否返回对new结果的影响
+  function Animal(NAME){
+      // return 
+      //  this.a
+      //  return ['ddd','k'];
+      this.name=NAME
+      
+      //  return ['ddd','k'];
+      //  this.a或者return数字之类的都不是对象？所以返回值是我们刚才创建的这个对象---Animal{},
+      // this.name='abb',console.log(ani)返回Animal {name: "abb"} name: "abb" __proto__: Object
+      // return {a:1,b:2}或者return数组等这才算对象，会返回这个对象
+     
+  }
+  // 每个函数都有一个prototype属性，这个属性是一个对象，它有一个constructor的属性,constructor指向构造函数
+  // __proto__除了null以外，每个对象都有这个属性  原型链
+  // 
+  Animal.prototype.superName='dog'
+  // 可以把方法定义在prototype上，公用的，可被继承
+  // 一般来说，.prototype里的方法公用，构造函数里属性的私用
+  Animal.prototype.say = function(){
+    console.log(this.name)
+  }
+ let ani= new Animal('cat');
+ let ani2 = new Animal('DOG')
+ console.log(ani,ani2);
+//  加了Animal.prototype.superName='dog'之后，输出的结果是Animal {name: "abb"}
+// name: "abb"
+// __proto__:
+// superName: "dog"
+// constructor: ƒ Animal()
+// __proto__: Object
+
+ console.log(myNew(Animal));
+//  console.log(ani.superName);
+//  console.log(myNew(Animal).superName);
+//  对比模拟和原生 
+
+//  class和function类似，同样适用于new,类依然是函数
+ class Shape{
+    constructor() {
+      return {
+        shape: 123
+      }
+    }
+  }
+  console.log(typeof Shape);  
+  const s = new Shape();
+  console.log(s);
+
+// 对this产生影响:
+// obj.fn()
+// call,apply,bind
+// new
+
+
+let empty = {}
+Animal.apply(empty);
+console.log(empty);
+// 输出{name: "abb"}name: "abb"__proto__: Object
+
+
+// 在objext.prototype里添加了方法或属性，不同构造函数都可以访问
+// object是js内置的
+Object.prototype.ax = 'asxx'
+let obj1 = {}
+console.log(obj1.ax);
+console.log(ani.ax)
+
+// 每个函数（例 function FOO(){} ）都有一个prototype属性，而prototype又是一个对象，每个对象都有_proto_属性，指向实例原型
+// prototype内部有 =｛constructor:Foo｝
+// prototype._proto_ = Object.prototype
+// new完的实例可以通过._proto_来访问上面的一些东西
+
+
+// [[Prototype]] ECMA 标准里面的说法
+// __proto__ chrome 私有的属性
+</script>
