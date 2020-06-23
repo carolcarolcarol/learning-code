@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1{
+            width: 40px;
+            height: 40px;background-color: aqua;
+            margin:50px;
+        }
+        .BFC{
+            overflow:hidden;
+
+        }
+        .box2{
+            width: 40px;
+            height: 40px;background-color: green;
+            margin:20px;
+           
+        }
+        /* 由于根元素默认BFC，所以一进来就有一个BFC,两个盒子box1,box2都属于这个BFC,后来加了一个盒子，套在BOX2上，盒子加了overflow:hidden属性就相当于是新建了一个BFC,所以现在有两个BFC将box1,box2隔开了 */
+        /* 边距折叠，同一个BFC之内，垂直方向上两个块级盒子（block-level-block）会折叠，取较大的margin，这两个盒子不是相距70px,而是50px */
+        /* 如果不想让它边距折叠，则可以用两个BFC */
+        /* -给元素加以下属性可新建一个BFC（为它们内部的内容content建立一个BFC）
+- float
+- absolute
+- display:inline-blocks||table-cell||table-caption
+- overflow不为visiable
+- 根元素默认形成BFC */
+/* 所以在这里，加了个overflow:hidden */
+    </style>
+</head>
+<body>
+    <div>
+        <div class="box1"></div>
+        <div class="BFC">
+        <div class="box2"></div>
+    </div>
+    </div>
+</body>
+</html>

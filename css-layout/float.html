@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrap{
+            border:1px solid #000;
+            overflow:hidden;
+            /* 如果用absolute会对盒子宽高有影响，要设置宽高 */
+            /* 清除浮动的原理应用了BFC规则 */
+            /* 新建一个BFC */
+            /* 由于有float元素，一个盒子的大小可能会缩小，除非新建BFC */
+        }
+        .main{
+            width: 40px;
+            height: 200px;
+            background-color: green;
+          /* position: absolute; */
+          /* position absolute也能脱离文档流，absolute其他元素会忽略absolute的元素，直接占据它的位置，所以会出现重叠。具体可见本文件下图absolute和图float的对比 */
+            float:left;
+            /* 顶到包含块的最左边的位置 */
+            /* float会脱离正常文档流，原来属于main的空间就不占据了。虽然不占据，但是，其他元素还是会为float留下空间，环绕在float的元素周边，所以不会像absolute,positioning那样重叠。可以多打几个aside,看是不是环绕在float周围。具体见文件中absolute和float的对比.所以没有float之前，框可以包住main和aside，有了之后，main脱离文档流，到了框之外 */
+        }
+        .aside{
+            /* aside再建一个bfc,这样就和和main的float不重叠了,就是aside和main的主体不重叠了 */
+            /* 这样就是两栏布局，左侧固定，右侧自适应 */
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+    <div class="main">main</div>
+    <div class="aside">aside
+        <br>aside
+        <br>aside
+        <br>aside
+        <br>aside
+        <br>aside
+        <br>aside
+        <br>aside
+        <br>aside
+        <br>aside
+        <br>aside<br>aside
+        <br>aside
+        <br>aside
+    </div>
+</div>
+</body>
+</html>
