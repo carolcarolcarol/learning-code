@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Animal(live,eat){
+            this.live = live;
+            this.eat = eat;
+        }
+        // instanceof 运算符用来检测 constructor.prototype 是否存在于参数 object 的原型链上。
+        // instanceof 用于判断左边的对象是否是它右边的类的实例
+        let cat = new Animal('land','meat')
+       
+        console.log(cat instanceof Animal)
+        let arr =  [];
+        console.log(arr instanceof Array);
+        let p = new Promise(() =>{})
+        console.log(p instanceof Promise)
+        // obj instanceof Constuctor
+      //  就是判断 左边这个对象(obj) 它的原型链上面 有没有出现过 Constuctor.prototype 这个对象
+      // 查找左边这个对象的原型链，看原型链有没有出现过 Constuctor.prototype这个对象 ，如果出现了 返回 true
+      // 如果找到原型链的顶端还没找到 返回false
+       function instance_of(obj,Constructor){
+           let prototype = Constructor.prototype
+           let proto = Object.getPrototypeOf(obj)
+        //    object.getprototypeof原型链上的下一层指向
+        while(true){
+            if(proto === null){
+                return false;
+            }else if(proto === prototype){
+                return true;
+            }
+            // 每循环一次都要取到下一个原型
+            proto = Object.getPrototypeOf(obj);
+        }
+    
+    
+    
+       }
+       console.log(instance_of(cat,Animal));
+       console.log(instance_of(Function,Object));
+       console.log(instance_of(Object,Function));
+       console.log(instance_of(Function ,Function));
+    //    上述四个结果都是true
+    
+    
+    // js创造一个对象的方式有很多种
+    let obj = {}
+    let dog = new Animal();
+    // new 的特点会创建一个对象{}
+    // 2.{}._proto__ = Animal.prototype继承
+    // 3.返回这个{}
+    let obj1 = new Object();
+    let obj2  = Object.create();
+    // 以上类型都是对象 {}
+    </script>
+</body>
+</html>
