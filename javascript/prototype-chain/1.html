@@ -1,0 +1,13 @@
+<script>
+
+    function Animal(){
+        this.name='name'
+    }
+    console.log(Animal.prototype)
+    // Animal对象内部,prototype自带constructor属性，指向Animal
+    Animal.prototype.say = function(){
+        console.log('say')
+    }
+    let ani = new Animal();
+    console.log(ani);
+</script>
