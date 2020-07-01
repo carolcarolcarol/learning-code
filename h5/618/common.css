@@ -1,0 +1,54 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    height:100%;
+    background-color: green;
+}
+#app {
+    font-family: Avenir,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /* font-smooothing优化手机上看到的字体，如何让字体看得更加清晰 */
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    top: 50%;
+}
+#app, .win {
+    position: absolute;
+    width: 750px;
+    height: 100%;
+    left: 50%;
+    overflow: hidden;
+    /* overflow:hidden确保只能看到一屏，一个男主角 */
+    margin-left: -375px;
+}
+
+/* 扒页面由下而上 */
+#playVideo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.innerwin, .vvw {
+    position: absolute;
+    width: 750px;
+    margin-left: -375px;
+    left: 50%;
+}
+.innerwin {
+    
+    top: 50%;
+   
+}
+
+.wt {
+    -webkit-perspective: 300px;
+    perspective: 300px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}

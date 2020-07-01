@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <!-- viewport移动端，不管什么设备，都写viewport ,width=750,因为所有浏览器里看到的画面都是渲染上去的，手机里的浏览器可以根据手机屏幕的大小和这个750进行缩放，等比例绘制 -->
+    <!-- 750---》前端移动设计稿的标准宽度 -->
+      <!-- user-scalable=no user-scalable=no 意思就是不支持缩放-->
+     
+    <title>618</title>
+    <link rel="stylesheet" href="./common.css">
+</head>
+<body>
+  <div id="app" class="win">
+    <div class="videowin1">
+        <video src="http://tmall.lpiii.cn/618/static/video/big3.mp4" class="video-box video1" style="transform:translateX(0px);"></video>
+        <div id="playVedioCon">
+          <div class="innerwin wt">
+            <div class="helptit"></div>
+          </div>
+        </div>
+    </div>
+</div>
+<script>
+  // 把app的高度定一下，完成这个项目的适配，。宽度都是750，高度每个手机不一样
+  window.onload = function(){
+    const appEle = document.querySelector('#app');
+    let playNum = 0;
+    init();
+    function init(){
+      const winHeight = window.innerHeight;
+      //手机屏幕高度
+      // 4次页面渲染  dom树 cssom树 每次操作会造成页面重绘。
+      // 所以需要优化
+      // appEle.style.background = 'rgb(0,0,0)';
+      // appEle.style.height = winHeight+'px';
+      // appEle.style.marginTop = (0 - winHeight/2) + 'px';
+      // // margintop:50%
+      // appEle.style.transform = 'scale(1,1)'
+// 因为不知道屏幕高度多少，又想让视频的中心点和屏幕的中心店重合，所以可以首先css里设置margin-top:50%,则视频到了距顶部一半的位置，然后再用margin-top:-winheight/2，让它回到顶着顶端的位置
+      // 就像水平居中的方法之一，首先让元素的左上顶点挨着屏幕中心，然后向左偏移自身宽度的一半，向上偏移自身高度的一半
+appEle.style.cssText = `background:rgb(0,0,0);height:${winHeight}px;margin-top:${-winHeight/2}px;transform:scale(1,1);`
+
+    }
+    // 每三秒切屏？？
+  //   setInterval(()=>{
+  //     playNum++;
+  //     if(playNum>2){
+  //       palynum = 0;
+  //     }
+  //     document.querySelector('.video-box').style.transform=
+  //     `translate(${0-playNum*750}px)`;
+  //   },3000);
+  // }
+  }
+</script>
+</body>
+</html>
