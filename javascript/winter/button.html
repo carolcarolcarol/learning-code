@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #p1{
+            /* 设置颜色的方法 */
+            /* background-color: green;
+            background-color: rgb(0,255,0);
+            background-color: #00ff00;
+            background-color: rgba(0,255,0,.3);
+            background-color: hsl(150,100%,60%); */
+            position: relative;
+            width: 80px;
+           
+            background:linear-gradient(0deg,hsl(23, 24%,86%),rgb(255, 38, 0));
+            border-radius:8px;
+            text-align: center;
+            border: solid 1.5px rgb(255, 0, 0);
+            color: white;
+            padding: 10px;
+            /* HSL 即色相、饱和度、亮度（英语：Hue, Saturation, Lightness）。
+
+色相（H）是色彩的基本属性，就是平常所说的颜色名称，如红色、黄色等。0-255之间
+饱和度（S）是指色彩的纯度，越高色彩越纯，低则逐渐变灰，取 0-100% 的数值。
+亮度（L），取 0-100%，增加亮度，颜色会向白色变化；减少亮度，颜色会向黑色变化。 */
+        }
+
+
+
+
+
+
+        .button{
+            display:inline-block;
+            /* inline-blocK行内块级元素，既可以与其他行内元素并排，又可以设置长宽，让padding和margin生效。行内元素--》可多个标签存在一行--》长宽不生效，完全靠内容撑宽高     块级元素--》独占一行，不能并排--》长宽生效，不设置宽，默认为页面宽度 */
+            padding:.5em 2em .55em;
+            outline: none;
+            /*  outline （轮廓）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。
+1
+注释：轮廓线不会占据空间，也不一定是矩形。
+outline 简写属性在一个声明中设置所有的轮廓属性。
+简单说，当我们直接单击文本框里面是，外部会出现一个高亮的效果，对，这个就是outline；可以设置outline：none；设置轮廓线为none，另外也可以outline-width:0px;
+
+            cursor: pointer;
+            /* //pc端 */
+            text-align: center;
+            /* 文本对齐方式 */
+            text-decoration:none;
+            /* text-decoration 属性规定添加到文本的修饰。比如下划线之类的
+
+注释：修饰的颜色由 "color" 属性设置。 */
+            font:14px/100% Arial;
+            /* line-height:100%,font-size:14px */
+            text-shadow:0 1px 1px rgba(0,0,0, .3);
+            /* 文字阴影 */
+            box-shadow:0 1px 2px rgba(0,0,0,.2);
+
+            /* 盒子阴影 */
+            border-radius: .5em;
+            color: white;
+            border:solid 1px;
+            background: linear-gradient(to bottom,hsl(150,95%,54.1%),hsl(150,95%,84.1%));
+/* background-image: linear-gradient(direction, color-stop1, color-stop2, ...);
+值	描述
+direction	用角度值指定渐变的方向（或角度）。
+color-stop1, color-stop2,...	用于指定渐变的起止颜色。 */
+
+
+        }
+    </style>
+</head>
+<body>
+    <!-- <p id="p1">123</p> -->
+    <div class="button">123</div>
+    <script>
+        const button = document.querySelector('.button');
+        let h = 25;
+        setInterval(()=>{
+            h++;
+            if(h>255){
+                h=0;
+            }
+            button.style.borderColor = `hsl(${h},95%,45%)`;
+            button.style.background = `linear-gradient(to bottom,hsl(${h},95%,54.1%),hsl(${h},95%,84.1%))`;
+        },100)
+       
+    </script>
+</body>
+</html>
