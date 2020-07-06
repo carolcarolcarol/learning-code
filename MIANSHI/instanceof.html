@@ -1,0 +1,31 @@
+<script>
+    let r = 'aaa'
+    // r是动态的可以修改的值
+    // 中括号['r']代表中括号里面的r会时刻与上面的r同步??
+    let obj={
+        [r]:123,
+        'r':456
+        // 两个r有区别？
+    }
+    console.log(obj,obj[r])
+    console.log(obj['r'],obj.r)
+    // 元编程：对编程语言的再编程
+    class myArr{
+        static a = 1;
+        static [Symbol.hasInstance](){
+            // 
+            return true;
+        }
+        push(){
+            console.log('发生了push,和原生push一样')
+        }
+
+    }
+    let arr1 = []
+    let arr = new myArr();
+    console.log(arr instanceof myArr)
+    // 自己可以指定成不成立，此时指定了不成立
+    // 但是指定了对arr本身后续操作并不影响，它只改变instanceof这一判断输出的值
+    console.log(myArr[Symbol.hasInstance])
+    console.log(arr1 instanceof myArr)
+</script>

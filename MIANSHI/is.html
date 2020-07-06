@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li data-uid="1">1</li>
+        <li data-uid="2">2</li>
+        <li data-uid="3">3</li>
+    </ul>
+    <!-- 冒泡 一个事件由Ul往外扩散 -->
+    <script>
+        // 第一种方式 
+        // const Lis = document.querySelectorAll('ul li');
+        // for(let node of Lis){
+        //     node.addEventListener('click',()=>{
+        //         console.log('clicked')
+        //     })
+        // }
+        // 第二种方式
+        let ul = document.querySelector('ul');
+        ul.addEventListener('click',(event)=>{
+            // 之前
+            // <li data-uid=""><div></div><span></span></li>
+            // 点中div或者span，因为它们是li的子元素，所以也可以处理成算点中li，所以可判断元素路径上是否有Li,有的话，也算是点中Li
+            console.log(event.path.find(x =>x.tagName === "LI" && x.getAttribute('')))
+            let nickname = event.target.textContent;
+            // 点1要得到1的uid,点2要得到2的uid---->getAttribute
+            let uid =event.target.getAttribute('data-uid');
+            console.log('clicked!',event.target,event.currentTarget)
+            // event.target这个事件触发的目标对象
+            // 谁绑定的这个事件，event.currentTarget就是哪个元素，比如此处绑的是Ul,则event.currenttarget就是Ul
+
+            const lis1 = document.querySelectorAll('li')
+            // 像getelementbytagname这样的选择是动态的 实时的 获取dom节点，会随着dom节点的增删改查而变化。
+            const lis2 = document.getElementsByTagName('li')
+            // 区别是什么？
+            const lis3 = ul.querySelector('li')
+            // 之前的做法
+            ul.removeChild(lis1[0]);
+            // 
+            // 会对第二个产生影响
+            console.log(lis1,lis2)
+            // 结果：lis1没被移除节点，lis2被移除了
+
+
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    li+li{
+           border-left: 1px solid #200;
+    }
+    ul li{
+        color: red;
+    }
+    ul>li{
+        color: blue;
+    }
+    /* 颜色是蓝的，优先级一样的时候，后面的会覆盖前面的，所以 */
+</style>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <div>
+            <li>5</li>
+            <!-- 5是红色的，没有被ul>li选中，因为ul>li选中的是ul的第一层子节点，要选中全部的就用Ul li -->
+        </div>
+    </ul>
+    <script>
+        console.log(document.querySelector("li+li"))
+        // li+li选中除第一个以外的元素，即2，3，4
+        console.log(a)
+        var a = 1;
+        // var变量提升
+        let promise = Promise.resolve(1); //立即resolve的promise
+        let promise1 = Promise.resolve(2);
+        let promise2 =new Promise((resolve,reject)=>{
+            setInterval(()=>{
+                resolve(1)
+            },3000)
+        })
+        let promise3 = new Promise((resolve,reject)=>{
+            // setInterval(()=>{
+                reject(1)
+            // },3000)
+        })
+        let promise4 = new Promise((resolve,reject)=>{
+            resolve(4)
+        })
+        // 以上两种写法不同，意思相同？
+        Promise.all([promise,promise1,promise2,promise3])//返回promise,成功则.then,失败则》catch
+        .then(res=>{
+            console.log(res)
+        })
+        .catch()
+        // all认为所有的异步任务成功才是成功的，否则就是失败的
+        Promise.allSettled([promise,promise1,promise2,promise3])//返回promise,成功则.then,失败则》catch
+        .then(res=>{
+            console.log(res)
+        })
+        // allsettled只要异步任务运行完了就算成功，不强调成功或者失败，只看最后异步任务是否结束
+        .catch()
+        Promise.race([promise3,promise2])
+    .then(res=>{
+        console.log(res)
+    })
+    .catch()        // promise2的状态一般会先发生变化，因为定义在前面
+        // race谁先发生变化就用谁的结果，比如先成功了，结果就是成功的,如果最先发生变化得到的结果是失败的，总体结果就是失败的
+    
+
+        // 怎么实现一个promise.all??
+
+    // 简略版 递归
+    function myInstance(obj,Constructor){
+        let proto = obj._proto_;
+        if(proto === Constructor.prototype){
+            return true;
+        }
+        return myInstance(proto,Constructor)
+    }
+    console.log(myInstance([],Array));
+    console.log(myInstance({},Object));
+    
+    
+    </script>
+</body>
+</html>
